@@ -24,12 +24,14 @@
     "axios": "^1.18.1",
     "browserstack-node-sdk": "^1.27.3",
     "cucumber-html-reporter": "^5.0.2",
+    "mssql": "^12.7.0",
     "playwright": "^1.61.1",
     "ts-node": "^10.9.2",
     "tsx": "^4.23.0",
     "typescript": "^7.0.2"
   },
   "dependencies": {
+    "@types/mssql": "^12.3.0",
     "allure-playwright": "^3.10.2",
     "dotenv": "^17.4.2",
     "winston": "^3.19.0"

@@ -1,0 +1,37 @@
+{
+  "name": "playwright-cucumber-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js",
+    "demo": "cucumber-js --tags @demo",
+    "smoke": "cucumber-js --tags @smoke",
+    "regression": "cucumber-js --tags @regression",
+    "parallel": "cucumber-js --parallel 4",
+    "retry": "cucumber-js --retry 2",
+    "browserstack": "browserstack-node-sdk cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.0.0",
+    "@playwright/test": "^1.61.1",
+    "allure-commandline": "^2.43.0",
+    "allure-cucumberjs": "^3.10.2",
+    "axios": "^1.18.1",
+    "browserstack-node-sdk": "^1.27.3",
+    "cucumber-html-reporter": "^5.0.2",
+    "playwright": "^1.61.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "allure-playwright": "^3.10.2",
+    "dotenv": "^17.4.2",
+    "winston": "^3.19.0"
+  }
+}

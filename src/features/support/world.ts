@@ -3,6 +3,9 @@ import {
     BrowserContext,
     Page
 } from "playwright";
+import { SauceDemoLoginPage } from "../../pages/sauceDemoLoginPage";
+import { SauceDemoLandingPage } from "../../pages/sauceDemoLandingPage";
+import { SauceDemoCartPage } from "../../pages/sauceDemoCartPage";
 import { LoginPage } from "../../pages/loginPage";
 import { ShopifyPage } from "../../pages/shopifyPage";
 import { CommonPage } from "../../pages/commonPage";
@@ -14,6 +17,7 @@ import {
     World,
     setWorldConstructor
 } from "@cucumber/cucumber";
+import { SauceDemoCheckoutPage } from "../../pages/sauceDemoCheckoutPage";
 
 export class CustomWorld extends World {
     browser!: Browser;
@@ -25,11 +29,16 @@ export class CustomWorld extends World {
     cartPage!: CartPage;
     checkoutPage!: CheckoutPage;
     productDetailPage!: ProductDetailPage;
-
+    sauceDemoLoginPage!: SauceDemoLoginPage;
+    sauceDemoLandingPage!: SauceDemoLandingPage;
+    sauceDemoCartPage!: SauceDemoCartPage;
+    sauceDemoCheckoutPage!: SauceDemoCheckoutPage;
+    
     // Shared data between steps
     runtimeProductName?: string;
     runtimeProductPrice?: string;
     runtimeProductQuantity?: string;
+    runtimeProductPriceList: string[] = [];
 
     constructor(options: IWorldOptions) {
         super(options);

@@ -1,6 +1,6 @@
 Feature: Demo for Web-based Application
 
-A short summary of the feature
+# A short summary of the feature
 
 @xraytest(123) @webapp @demo
 Scenario Outline: Add product to cart and validate price

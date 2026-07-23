@@ -1,0 +1,65 @@
+Project run instructions
+=======================
+
+1. Install dependencies
+   - Run: npm install
+
+2. Set environment variables
+   - Make sure the required values are available in the environment or in the project .env file.
+   - The Sauce Demo tests use the following variables:
+     - SAUCE_DEMO_USERNAME
+     - SAUCE_DEMO_PASSWORD
+     - BASE_URL_SAUCE_DEMO
+
+3. Run the Sauce Demo tests
+   - Run: npm run saucedemo
+
+4. Generate the Allure report
+   - Run: npx allure generate allure-results --clean
+
+5. Open the Allure report
+   - Run: npx allure open allure-report
+
+Project structure
+=================
+
+- src/features/
+  - Contains Gherkin feature files and step definitions.
+  - This is where the test scenarios and their business-readable logic live.
+
+- src/pages/
+  - Contains page object classes for the UI interactions.
+  - Each page class groups the locators and actions for one screen or area.
+
+- src/features/support/
+  - Contains Cucumber support files such as hooks and the custom world.
+  - This manages test lifecycle, browser setup, and shared state across steps.
+
+- src/integrations/
+  - Contains external integrations such as Allure or Xray helpers.
+
+- reports/
+  - Stores generated JSON or report output.
+
+- allure-results/ and allure-report/
+  - Stores Allure raw data and the generated HTML report.
+
+Why this structure was chosen
+==============================
+
+The project is organised by responsibility so it stays easy to maintain and scale.
+- Feature files describe the behaviour of the application in plain language.
+- Step definitions connect those scenarios to executable code.
+- Page objects keep selectors and UI actions separated from test logic.
+- Support files manage the test lifecycle and shared context.
+
+This separation makes it easier to update tests when the UI changes, reuse page actions across multiple scenarios, and keep the test code readable.
+
+Improvements with more time
+===========================
+
+- Add stronger waits and more robust selectors for flaky UI elements.
+- Add more reusable utility methods for common interactions.
+- Improve test data management by moving credentials and test data into a more structured setup.
+- Add more detailed assertions and validation for checkout and cart flows.
+- Expand reporting with richer tags, screenshots, and better failure summaries.

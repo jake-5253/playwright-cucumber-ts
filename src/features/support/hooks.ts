@@ -11,15 +11,16 @@ import { CheckoutPage } from "../../pages/checkoutPage";
 import { CommonPage } from "../../pages/commonPage";
 import { ProductDetailPage } from "../../pages/productDetailPage";
 import { ShopifyPage } from "../../pages/shopifyPage";
+import { SauceDemoLoginPage } from "../../pages/sauceDemoLoginPage";
+import { SauceDemoLandingPage } from "../../pages/sauceDemoLandingPage";
+import { SauceDemoCartPage } from "../../pages/sauceDemoCartPage";
 import { launchBrowser } from "./browser-factory";
 import { CustomWorld } from "./world";
 import { XrayService } from "../../integrations/xray/xrayService";
-import { AllureService } from "../../integrations/allure/allureService";
+import { SauceDemoCheckoutPage } from "../../pages/sauceDemoCheckoutPage";
 
 const xray =
     new XrayService();
-const allure =
-    new AllureService();
 
 Before(async function (this: CustomWorld) {
 
@@ -37,34 +38,46 @@ Before(async function (this: CustomWorld) {
     this.cartPage = new CartPage(this.page);
     this.checkoutPage = new CheckoutPage(this.page);
     this.productDetailPage = new ProductDetailPage(this.page);
-
+    this.sauceDemoLoginPage = new SauceDemoLoginPage(this.page);
+    this.sauceDemoLandingPage = new SauceDemoLandingPage(this.page);
+    this.sauceDemoCartPage = new SauceDemoCartPage(this.page);
+    this.sauceDemoCheckoutPage = new SauceDemoCheckoutPage(this.page);
 });
 
 After(async function (this: CustomWorld, scenario) {
-    
-  if (scenario.result?.status === Status.FAILED) {
+  const status = scenario.result?.status;
+
+  if (status && status !== Status.PASSED) {
     const screenshotPath = `screenshots/${Date.now()}.png`;
 
-    const image = await this.page.screenshot({
-      path: screenshotPath,
-      fullPage: true
-    });
+    try {
+      const image = await this.page.screenshot({
+        path: screenshotPath,
+        fullPage: true
+      });
 
-    this.attach(
-      fs.readFileSync(screenshotPath),
-      "image/png"
-    );
-
-    allure.attachScreenshot(
-        this.attach.bind(this),
-        image
-    );
+      const screenshotBuffer = fs.readFileSync(screenshotPath);
+      await this.attach(screenshotBuffer, "image/png");
+    } catch (error) {
+      console.warn("Unable to attach screenshot to report:", error);
+    }
   }
 
-  await this.browser.close();
-  await this.context.tracing.stop({
-    path: `test-results/${Date.now()}.zip`
-  });
+  try {
+    await this.browser.close();
+  } catch (error) {
+    console.warn("Unable to close browser cleanly:", error);
+  }
+
+  try {
+    if (this.context) {
+      await this.context.tracing.stop({
+        path: `test-results/${Date.now()}.zip`
+      });
+    }
+  } catch (error) {
+    // Ignore tracing shutdown errors if the browser/context is already closed.
+  }
 });
 
 AfterAll(async function () {
